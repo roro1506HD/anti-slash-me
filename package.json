@@ -1,0 +1,20 @@
+{
+  "name": "anti-slash-me",
+  "version": "1.0.0",
+  "description": "Anti /me for twitch chats.",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roro1506HD/anti-slash-me.git"
+  },
+  "author": "roro1506HD",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roro1506HD/anti-slash-me/issues"
+  },
+  "homepage": "https://github.com/roro1506HD/anti-slash-me#readme",
+  "dependencies": {
+    "tmi.js": "^1.5.0"
+  }
+}
