@@ -10,9 +10,6 @@ const files = require('fs');
 
 // Create client
 const client = new tmi.Client({
-    options: {
-        debug: true
-    },
     connection: {
         secure: true,
         reconnect: true
@@ -46,10 +43,10 @@ function onConnectedHandler(address, port) {
 }
 
 function onActionHandler(channel, userstate, message, self) {
-    if (self || userstate.mod || userstate.badges.broadcaster !== '1')
+    if (self || userstate.mod || !!userstate.badges || userstate.badges.broadcaster !== '1')
         return;
 
-    let sanctionCount = database[userstate['user-id']] = database[userstate['user-id']] + 1 || 1;
+    let sanctionCount = database[userstate['user-id'] + channel] = database[userstate['user-id'] + channel] + 1 || 1;
 
     if (sanctionCount === 1) {
         client.say(channel, `/delete ${userstate.id}`)
