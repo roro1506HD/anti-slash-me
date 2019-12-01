@@ -54,7 +54,7 @@ function onConnectedHandler(address, port) {
 }
 
 function onActionHandler(channel, userstate, message, self) {
-    if (self || userstate.mod || !(!!userstate.badges) || userstate.badges.broadcaster === '1')
+    if (self || userstate.mod || (userstate.badges != undefined && userstate.badges.broadcaster === '1'))
         return;
 
     let sanctionCount = database[userstate['user-id'] + channel] = database[userstate['user-id'] + channel] + 1 || 1;
