@@ -54,10 +54,17 @@ function onConnectedHandler(address, port) {
 }
 
 function onActionHandler(channel, userstate, message, self) {
-    if (self || userstate.mod || (userstate.badges != undefined && userstate.badges.broadcaster === '1'))
+    if (self || userstate.mod || (userstate.badges !== undefined && userstate.badges.broadcaster === '1'))
         return;
 
-    let sanctionCount = database[userstate['user-id'] + channel] = database[userstate['user-id'] + channel] + 1 || 1;
+    if (userstate['display-name'] === 'roro1506HD') {
+        client.say(channel, 'Détection de /me de mon maître... Je ne sais que faire... NotLikeThis');
+        return;
+    }
+
+    database[channel] = database[channel] || {};
+
+    let sanctionCount = database[channel][userstate['user-id']] = database[channel][userstate['user-id']] + 1 || 1;
 
     if (sanctionCount === 1) {
         client.say(channel, `/delete ${userstate.id}`)
@@ -76,7 +83,7 @@ function onActionHandler(channel, userstate, message, self) {
         .then(unused => console.log(`[${channel}] Timed out ${userstate.username} for 30 minutes for doing /me for the 4th time.`))
         .catch(console.log);
     } else {
-        client.say(channel, `/ban ${userstate.username} 60 La commande /me est interdite sur ce stream.`)
+        client.say(channel, `/ban ${userstate.username} La commande /me est interdite sur ce stream.`)
         .then(unused => console.log(`[${channel}] Permanently banned ${userstate.username} for doing /me too many times.`))
         .catch(console.log);
     }
@@ -85,7 +92,7 @@ function onActionHandler(channel, userstate, message, self) {
 function onLineHandler(line) {
     line = line.trim();
 
-    if (line.length == 0) {
+    if (line.length === 0) {
         readline.prompt();
         return;
     }
